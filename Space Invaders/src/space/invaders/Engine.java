@@ -20,7 +20,6 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -72,6 +71,7 @@ public class Engine {
     private boolean Perdeu;
     private boolean EhInicio = true;
     public boolean Rodando;
+    private int spawnAlienEsp = 0;
 
     public Engine(int TipoNave, int nivel, int moedas, Stage menu) {
 
@@ -175,14 +175,13 @@ public class Engine {
         });
 
         this.loopAlienEspecial = new Thread(() -> {
-            while (!Perdeu && !Ganhou) {
+            while (!Perdeu && !Ganhou && spawnAlienEsp <= 2) {
                 try {
                     sleep(225 - (25 * Nivel));
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 AtualizaAlienEspecial();
-
             }
         });
 
@@ -232,7 +231,9 @@ public class Engine {
                     break;
                 case "p":
                 case "P":
-
+                    loopAnimacao.stop();
+                    gameStage.close();
+                    menuStage.show();
                 default:
                     break;
             }
@@ -268,8 +269,8 @@ public class Engine {
             if (aliens.get(i).PosY == SpaceInvaders.MatrizY - 3) {
                 Perdeu = true;
             }
-            
-            if ((aliens.get(i).PosX == 0 && aliens.get(i).Direcao == -1) || (aliens.get(i).PosX == SpaceInvaders.MatrizX - 2 && aliens.get(i).Direcao == 1)) {
+
+            if ((aliens.get(i).PosX == 0 && aliens.get(i).Direcao == -1) || (aliens.get(i).PosX == SpaceInvaders.MatrizX - 1 && aliens.get(i).Direcao == 1)) {
                 for (int j = 0; j < aliens.size(); j++) {
                     aliens.get(j).trocaDirecao();
                 }
@@ -395,8 +396,9 @@ public class Engine {
     }
 
     private void AtualizaAlienEspecial() {
-        if (aliens.size() % 20 == 0) {
+        if ((aliens.size() == 20 && spawnAlienEsp < 2) || (aliens.size() == 40 && spawnAlienEsp == 0)) {
             alienEspecial.add(new AlienEspecial());
+            spawnAlienEsp++;
         }
 
         for (int i = 0; i < alienEspecial.size(); i++) {

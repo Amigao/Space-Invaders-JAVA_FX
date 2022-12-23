@@ -185,7 +185,7 @@ public class LojaController implements Initializable {
             Logger.getLogger(LojaController.class.getName()).log(Level.SEVERE, null, ex);
         }
         tMoedas = new Text("Moedas: " + this.Moedas);
-        Image i = new Image("fundo_loja.jpg");
+        Image i = new Image("fundoLoja.jpg");
         iFundo.setImage(i);
     }
 

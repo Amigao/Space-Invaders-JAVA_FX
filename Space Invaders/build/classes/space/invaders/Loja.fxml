@@ -13,7 +13,7 @@
    <children>
       <ImageView fx:id="iFundo" fitHeight="507.0" fitWidth="1025.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../fundo_loja.jpg" />
+            <Image url="@../../fundoLoja.jpg" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a4ffad40" height="281.0" layoutX="58.0" layoutY="112.0" stroke="#26ff00" strokeType="INSIDE" strokeWidth="3.0" width="219.0" />

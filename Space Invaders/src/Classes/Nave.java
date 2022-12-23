@@ -56,7 +56,7 @@ public class Nave extends Atirador {
 
     public void AtualizaNave(int Direção) {
 
-        if (PosX + Direção > 0 && PosX + Direção < SpaceInvaders.MatrizX) {
+        if (PosX + Direção >= 0 && PosX + Direção < SpaceInvaders.MatrizX - 1) {
             PosX += Direção;
         }
 

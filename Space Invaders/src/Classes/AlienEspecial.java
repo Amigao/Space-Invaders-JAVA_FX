@@ -24,7 +24,7 @@ public class AlienEspecial extends Entidade {
     }
     
     public void MoverAlien() {
-        if((Direcao == -1 && PosX == 1) || (Direcao == 1 && PosX == SpaceInvaders.MatrizX)) this.trocaDirecao();
+        if((Direcao == -1 && PosX == 0) || (Direcao == 1 && PosX == SpaceInvaders.MatrizX - 1)) this.trocaDirecao();
         else PosX += Direcao;
     }
 
