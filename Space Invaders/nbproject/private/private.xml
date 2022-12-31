@@ -3,21 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Classes/AlienEspecial.java</file>
-            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Classes/Barreiras.java</file>
-            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Classes/Tiro.java</file>
-            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/space/invaders/SpaceInvaders.java</file>
-            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Classes/Entidade.java</file>
-            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Classes/Atirador.java</file>
+            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/InterfaceGráfica/Explosao.java</file>
+            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Menus/MenuController.java</file>
+            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/InterfaceGráfica/Efeito.java</file>
+            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/InterfaceGráfica/Tela.java</file>
+            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/InterfaceGráfica/Elemento.java</file>
             <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Menus/TelaVencedorController.java</file>
             <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Menus/LojaController.java</file>
-            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Menus/AjudaController.java</file>
-            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Classes/Nave.java</file>
-            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Menus/TelaPerdedorController.java</file>
-            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Classes/Engine.java</file>
-            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/InterfaceGráfica/Tela.java</file>
-            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Classes/Aliens.java</file>
             <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Menus/CarregaSaveController.java</file>
+            <file>file:/C:/Users/pedro/USP/POO%20-%20Trampo/Space-Invaders-JAVA_FX/Space%20Invaders/src/Menus/TelaPerdedorController.java</file>
         </group>
     </open-files>
 </project-private>
