@@ -5,80 +5,105 @@
  */
 package space.invaders;
 
+import Classes.Engine;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /**
+ * Main do jogo. Abre o menu e seta variáveis gerais do jogo e úteis para
+ * diversas classes.
  *
  * @author pedro
  */
 public class SpaceInvaders extends Application {
 
+    /**
+     * Largura da tela que o jogo funciona.
+     */
     public static int Width = 1920;
-    public static int Height = 1080;
 
-    public static int MatrizX = 31;
-    public static int MatrizY = 16;
+    /**
+     * Altura da tela que o jogo funciona.
+     */
+    public static int Height = 1050;
 
-    public int Nivel = 1;
+    /**
+     * Tamanho base das imagens usadas no jogo. A maioria das imagens tem 64
+     * pixels de altura e largura, mas algumas podem ter metade ou o dobro
+     * disso.
+     */
+    public static int TamBase = 64;
 
-    public void AbreMenu(Button b) throws IOException {
-        // carrega FXML e monta cena
-        Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
-        Scene scene = new Scene(root);
+    /**
+     * Vetor das naves obtidas. 1 para obtida, 0 para não obtida. Jogos novos
+     * começam somente com a nave 1 obtidade.
+     */
+    public static int Naves[] = {1, 0, 0, 0};
 
-        // acessa palco corrente
-        Stage stage = (Stage) b.getScene().getWindow();
+    /**
+     * Nível que o jogador está. Jogos novos começam no nível 1.
+     */
+    public static int Nivel = 1;
 
-        // troca a cena: de login para principal
-        stage.setTitle("Space Invaders - Menu Principal");
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
-    }
+    /**
+     * Tipo da nave que o jogador está usando. Jogos novos começam com a nave 1.
+     */
+    public static int TipoNave = 1;
 
-    void CriaSave() {
-        try {
-            File myObj = new File("LoadProgress.txt");
-            if (myObj.createNewFile()) {
-                System.out.println("Save do jogo criado: " + myObj.getName());
-            } else {
-                System.out.println("Save do jogo já existe.");
-            }
-        } catch (IOException e) {
-            System.out.println("Ocorreu um erro para abrir o save.");
-            e.printStackTrace();
-        }
-        try {
-            FileWriter myWriter = new FileWriter("LoadProgress.txt");
-            String aux = "1|10|1";
-            myWriter.write(aux);
-            myWriter.close();
-            System.out.println("Jogo aberto com sucesso.");
-        } catch (IOException e) {
-            System.out.println("Ocorreu um erro ao abrir o save.");
-            e.printStackTrace();
-        }
-    }
+    /**
+     * Quantidade de moedas do jogador. Moedas são obtidas ao atingir os aliens
+     * especiais e passar de nível. Jogos novos começam com 0 moedas;
+     */
+    public static int Moedas = 10;
 
+    /**
+     * Pontuação do jogador.
+     */
+    public static int Score = 0;
+
+    /**
+     * Função que abre o menu principal e inicia, portanto, o jogo.
+     *
+     * @param primaryStage estágio inicial do programa; estágio vinculado ao
+     * menu principal
+     * @throws IOException exceção de erro
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
-        CriaSave();
-        
-        Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+
+        Parent root = FXMLLoader.load(getClass().getResource("/Menus/CarregaSave.fxml"));
 
         Scene scene = new Scene(root);
-
-        primaryStage.setTitle("Space Invaders - Menu Principal");
+        primaryStage.setResizable(false);
+        primaryStage.setTitle("Space Invaders - Carregar progresso");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    /**
+     * Método que salva no documento de progresso as informações do jogo.
+     */
+    public static void AtualizaDados() {
+        try {
+            String aux = SpaceInvaders.Nivel + "|" + SpaceInvaders.Moedas + "/" + SpaceInvaders.Score + "|" + SpaceInvaders.Naves[0] + SpaceInvaders.Naves[1] + SpaceInvaders.Naves[2] + SpaceInvaders.Naves[3];
+            FileWriter myWriter = new FileWriter("LoadProgress.txt");
+            myWriter.write(aux);
+            myWriter.close();
+        } catch (IOException ex) {
+            Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

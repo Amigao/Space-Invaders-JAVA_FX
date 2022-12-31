@@ -3,18 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package space.invaders;
+package Menus;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import space.invaders.SpaceInvaders;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,10 +16,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
@@ -35,38 +30,142 @@ import javafx.stage.Stage;
  */
 public class LojaController implements Initializable {
 
+    /**
+     * Imagem de plano de fundo
+     */
     @FXML
     private ImageView iFundo;
+
+    /**
+     * Texto que diz as moedas do jogador
+     */
     @FXML
     private Text tMoedas;
+
+    /**
+     * Botao de saída pro menu
+     */
     @FXML
     private Button bSair;
+
+    /**
+     * Botão para selecionar a nave 1
+     */
     @FXML
-    private Button bComprarN1;
+    private Button bSel1;
+
+    /**
+     * Botão para selecionar a nave 2
+     */
+    @FXML
+    private Button bSel2;
+
+    /**
+     * Botão para selecionar a nave 3
+     */
+    @FXML
+    private Button bSel3;
+
+    /**
+     * Botão para selecionar a nave 4
+     */
+    @FXML
+    private Button bSel4;
+
+    /**
+     * Botão para comprar nave 2
+     */
     @FXML
     private Button bComprarN2;
+
+    /**
+     * Botão para comprar nave 3
+     */
     @FXML
     private Button bComprarN3;
+
+    /**
+     * Botão para comprar nave4
+     */
     @FXML
     private Button bComprarN4;
 
-    private int Moedas;
-    private int tipoNave;
-    private int Nivel;
+    /**
+     * Retângulo da nave 2.
+     */
+    @FXML
+    private Rectangle ret2;
 
-    private int Naves[] = {1, 0, 0, 0};
+    /**
+     * Retângulo da nave 3.
+     */
+    @FXML
+    private Rectangle ret3;
 
+    /**
+     * Retângulo da nave 4.
+     */
+    @FXML
+    private Rectangle ret4;
+
+    /**
+     * Seleciona a nave 1 para o usuário.
+     *
+     * @param event ação de clicar no botão.
+     */
+    @FXML
+    private void clickSel1(ActionEvent event) {
+        SpaceInvaders.TipoNave = 1;
+        AtualizaLoja();
+    }
+
+    /**
+     * Seleciona a nave 2 para o usuário.
+     *
+     * @param event ação de clicar no botão.
+     */
+    @FXML
+    private void clickSel2(ActionEvent event) {
+        SpaceInvaders.TipoNave = 2;
+        AtualizaLoja();
+    }
+
+    /**
+     * Seleciona a nave 3 para o usuário.
+     *
+     * @param event ação de clicar no botão.
+     */
+    @FXML
+    private void clickSel3(ActionEvent event) {
+        SpaceInvaders.TipoNave = 3;
+        AtualizaLoja();
+    }
+
+    /**
+     * Seleciona a nave 4 para o usuário.
+     *
+     * @param event ação de clicar no botão.
+     */
+    @FXML
+    private void clickSel4(ActionEvent event) {
+        SpaceInvaders.TipoNave = 4;
+        AtualizaLoja();
+    }
+
+    /**
+     * Retorna ao menu inicial.
+     *
+     * @param event ação de clicar no botão.
+     */
     @FXML
     private void clickSair(ActionEvent event) {
         try {
-            // carrega FXML e monta cena
             Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
             Scene scene = new Scene(root);
-
-            // acessa palco corrente
             Stage stage = (Stage) bSair.getScene().getWindow();
-
-            // troca a cena: de login para principal
+            stage.setOnCloseRequest((WindowEvent e) -> {
+                System.exit(0);
+            });
             stage.setTitle("Space Invaders - Menu Principal");
             stage.setResizable(false);
             stage.setScene(scene);
@@ -80,90 +179,25 @@ public class LojaController implements Initializable {
         }
     }
 
+    /**
+     * Compra a nave 2 se há moedas disponíveis. Printa erro caso contrário.
+     *
+     * @param event ação de clicar no botão.
+     */
     @FXML
     private void clickN2(ActionEvent event) {
-        if (this.Moedas >= 2) {
-            bComprarN2.setDisable(true);
-            if (Naves[1] == 1) {
+        if (SpaceInvaders.Moedas >= 2) {
+            if (SpaceInvaders.Naves[1] == 1) {
                 Alert mensagem = new Alert(Alert.AlertType.ERROR);
                 mensagem.setTitle("Nave possuída");
                 mensagem.setHeaderText(null);
                 mensagem.setContentText("Você já tem essa nave!");
                 mensagem.showAndWait();
             } else {
-                Naves[1] = 1;
-                this.Moedas -= 2;
-                try {
-                    String aux = this.Nivel + "|" + this.Moedas + "|" + 2;
-                    FileWriter myWriter = new FileWriter("LoadProgress.txt");
-                    myWriter.write(aux);
-                    myWriter.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        } else {
-            Alert mensagem = new Alert(Alert.AlertType.ERROR);
-            mensagem.setTitle("Dinheiro insuficiente");
-            mensagem.setHeaderText(null);
-            mensagem.setContentText("Você não tem moedas para comprar essa nave! Acerte mais aliens especiais para ganhar moedas.");
-            mensagem.showAndWait();
-        }
-    }
-
-    @FXML
-    private void clickN3(ActionEvent event) {
-        if (this.Moedas >= 3) {
-            bComprarN3.setDisable(true);
-            if (Naves[2] == 1) {
-                Alert mensagem = new Alert(Alert.AlertType.ERROR);
-                mensagem.setTitle("Nave possuída");
-                mensagem.setHeaderText(null);
-                mensagem.setContentText("Você já tem essa nave!");
-                mensagem.showAndWait();
-            } else {
-                Naves[2] = 1;
-                this.Moedas -= 3;
-                try {
-                    String aux = this.Nivel + "|" + this.Moedas + "|" + 3;
-                    FileWriter myWriter = new FileWriter("LoadProgress.txt");
-                    myWriter.write(aux);
-                    myWriter.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        } else {
-            Alert mensagem = new Alert(Alert.AlertType.ERROR);
-            mensagem.setTitle("Dinheiro insuficiente");
-            mensagem.setHeaderText(null);
-            mensagem.setContentText("Você não tem moedas para comprar essa nave! Acerte mais aliens especiais para ganhar moedas.");
-            mensagem.showAndWait();
-        }
-    }
-
-    @FXML
-    private void clickN4(ActionEvent event) {
-        if (this.Moedas >= 5) {
-            bComprarN4.setDisable(true);
-
-            if (Naves[3] == 1) {
-                Alert mensagem = new Alert(Alert.AlertType.ERROR);
-                mensagem.setTitle("Nave possuída");
-                mensagem.setHeaderText(null);
-                mensagem.setContentText("Você já tem essa nave!");
-                mensagem.showAndWait();
-            } else {
-                Naves[3] = 1;
-                this.Moedas -= 5;
-                try {
-                    String aux = this.Nivel + "|" + this.Moedas + "|" + 4;
-                    FileWriter myWriter = new FileWriter("LoadProgress.txt");
-                    myWriter.write(aux);
-                    myWriter.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                SpaceInvaders.Naves[1] = 1;
+                SpaceInvaders.Moedas -= 2;
+                SpaceInvaders.TipoNave = 2;
+                AtualizaLoja();
             }
         } else {
             Alert mensagem = new Alert(Alert.AlertType.ERROR);
@@ -175,45 +209,121 @@ public class LojaController implements Initializable {
     }
 
     /**
-     * Initializes the controller class.
+     * Compra a nave 3 se há moedas disponíveis. Printa erro caso contrário.
+     *
+     * @param event ação de clicar no botão.
+     */
+    @FXML
+    private void clickN3(ActionEvent event) {
+        if (SpaceInvaders.Moedas >= 3) {
+            if (SpaceInvaders.Naves[2] == 1) {
+                Alert mensagem = new Alert(Alert.AlertType.ERROR);
+                mensagem.setTitle("Nave possuída");
+                mensagem.setHeaderText(null);
+                mensagem.setContentText("Você já tem essa nave!");
+                mensagem.showAndWait();
+            } else {
+                SpaceInvaders.Naves[2] = 1;
+                SpaceInvaders.Moedas -= 3;
+                SpaceInvaders.TipoNave = 3;
+                AtualizaLoja();
+            }
+        } else {
+            Alert mensagem = new Alert(Alert.AlertType.ERROR);
+            mensagem.setTitle("Dinheiro insuficiente");
+            mensagem.setHeaderText(null);
+            mensagem.setContentText("Você não tem moedas para comprar essa nave! Acerte mais aliens especiais para ganhar moedas.");
+            mensagem.showAndWait();
+        }
+    }
+
+    /**
+     * Compra a nave 4 se há moedas disponíveis. Printa erro caso contrário.
+     *
+     * @param event ação de clicar no botão.
+     */
+    @FXML
+    private void clickN4(ActionEvent event) {
+        if (SpaceInvaders.Moedas >= 4) {
+            SpaceInvaders.Naves[3] = 1;
+            SpaceInvaders.Moedas -= 4;
+            SpaceInvaders.TipoNave = 4;
+            AtualizaLoja();
+        } else {
+            Alert mensagem = new Alert(Alert.AlertType.ERROR);
+            mensagem.setTitle("Dinheiro insuficiente");
+            mensagem.setHeaderText(null);
+            mensagem.setContentText("Você não tem moedas para comprar essa nave! Acerte mais aliens especiais para ganhar moedas.");
+            mensagem.showAndWait();
+        }
+    }
+
+    /**
+     * Inicializa a loja com o escrito das moedas do jogador e configurando as
+     * naves disponíveis de acordo com a lista de naves possuídas.
+     *
+     * @param url padrao do metodo
+     * @param rb padrao do metodo
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            CarregaSave();
-        } catch (IOException ex) {
-            Logger.getLogger(LojaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        tMoedas = new Text("Moedas: " + this.Moedas);
-        Image i = new Image("fundoLoja.jpg");
-        iFundo.setImage(i);
+
+        AtualizaLoja();
+        tMoedas.setText("Moedas: " + SpaceInvaders.Moedas);
     }
 
-    private void CarregaSave() throws IOException {
-        try {
-            FileInputStream stream = new FileInputStream("LoadProgress.txt");
-            InputStreamReader reader = new InputStreamReader(stream);
-            BufferedReader br = new BufferedReader(reader);
-            String linha = br.readLine();
-            System.out.println(linha);
+    /**
+     * Função que verifica quais as naves já adquiridas pelo jogador e modifica
+     * a loja de acordo com isso.
+     */
+    private void AtualizaLoja() {
+        bSel1.setDisable(false);
+        bSel3.setVisible(false);
+        bSel4.setVisible(false);
+        bSel2.setVisible(false);
 
-            while (linha != null) {
-                String nivel = linha.substring(0, linha.indexOf('|'));
-                String moedas = linha.substring(linha.indexOf('|') + 1, linha.lastIndexOf('|'));
-                String nave = linha.substring(linha.lastIndexOf('|') + 1, linha.length());
-                this.Nivel = Integer.parseInt(nivel);
-                this.Moedas = Integer.parseInt(moedas);
-                this.tipoNave = Integer.parseInt(nave);
-
-                System.out.println("Moedas: " + this.Moedas);
-
-                linha = br.readLine();
-            }
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Ocorreu um erro ao abrir o save.");
-            e.printStackTrace();
+        tMoedas.setText("Moedas: " + SpaceInvaders.Moedas);
+        if (SpaceInvaders.Naves[1] == 1) {
+            bComprarN2.setVisible(false);
+            bSel2.setVisible(true);
+            bSel2.setDisable(false);
+            ret2.setFill(Color.valueOf("#a4ffad40"));
+            ret2.setStroke(Color.valueOf("#26ff00"));
         }
+        if (SpaceInvaders.Naves[2] == 1) {
+            bSel3.setVisible(true);
+            bSel3.setDisable(false);
+            bComprarN3.setVisible(false);
+            ret3.setFill(Color.valueOf("#a4ffad40"));
+            ret3.setStroke(Color.valueOf("#26ff00"));
+        }
+        if (SpaceInvaders.Naves[3] == 1) {
+            bSel4.setVisible(true);
+            bSel4.setDisable(false);
+            bComprarN4.setVisible(false);
+            ret4.setFill(Color.valueOf("#a4ffad40"));
+            ret4.setStroke(Color.valueOf("#26ff00"));
+        }
+
+        switch (SpaceInvaders.TipoNave) {
+            case 1:
+                bSel1.setDisable(true);
+                break;
+            case 2:
+                bSel2.setDisable(true);
+                break;
+            case 3:
+                bSel3.setDisable(true);
+                break;
+            case 4:
+                bSel4.setDisable(true);
+                break;
+            default:
+                break;
+        }
+
+        SpaceInvaders.AtualizaDados();
+
     }
 
 }

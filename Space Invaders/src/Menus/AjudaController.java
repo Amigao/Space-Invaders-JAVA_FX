@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package space.invaders;
+package Menus;
 
 import java.io.IOException;
 import java.net.URL;
@@ -17,32 +12,42 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import space.invaders.SpaceInvaders;
 
 /**
- * FXML Controller class
+ * Classe de controle FXML da tela de ajuda
  *
  * @author pedro
  */
 public class AjudaController implements Initializable {
 
+    /**
+     * Botão para voltar para o menu principal.
+     */
     @FXML
     private Button bSair;
 
+    /**
+     * Retorna ao menu principal.
+     *
+     * @param event ação de clicar no botão.
+     */
     @FXML
     private void clickSair(ActionEvent event) {
         try {
-//            AbreMenu(bSair);
-            // carrega FXML e monta cena
             Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
             Scene scene = new Scene(root);
 
-            // acessa palco corrente
             Stage stage = (Stage) bSair.getScene().getWindow();
-
-            // troca a cena: de login para principal
             stage.setTitle("Space Invaders - Menu Principal");
             stage.setResizable(false);
             stage.setScene(scene);
+            stage.setOnCloseRequest((WindowEvent e) -> {
+                SpaceInvaders.AtualizaDados();
+                System.exit(0);
+            });
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             Alert mensagem = new Alert(Alert.AlertType.ERROR);
@@ -54,11 +59,13 @@ public class AjudaController implements Initializable {
     }
 
     /**
-     * Initializes the controller class.
+     * IInicializa a classe construtora.
+     *
+     * @param url padrao do metodo
+     * @param rb padrao do metodo
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
 }
